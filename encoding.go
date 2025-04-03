@@ -5,9 +5,10 @@ import (
 	"compress/gzip"
 	"compress/zlib"
 	"encoding/json"
-	"github.com/andybalholm/brotli"
 	"io"
 	"sync"
+
+	"github.com/andybalholm/brotli"
 )
 
 type encoder interface {
@@ -179,7 +180,7 @@ func (b *brotliEncoder) Encode(rc io.Reader) (*bytes.Buffer, error) {
 	w := b.brWriterPool.Get().(*brotli.Writer)
 	defer func() {
 		_ = w.Close()
-		b.brWriterPool.Put(w)
+		// b.brWriterPool.Put(w)
 	}()
 
 	buf := b.bufferPool.Get().(*bytes.Buffer)

@@ -201,16 +201,16 @@ func (c *client) sendRequest(
 				bufData = buf.Bytes()
 				encodedBuf, err := c.encoder.Encode(bytes.NewReader(bufData))
 				if err != nil {
-					if buf, ok := body.(*bytes.Buffer); ok {
-						c.bufferPool.Put(buf)
-					}
+					// if buf, ok := body.(*bytes.Buffer); ok {
+					// 	c.bufferPool.Put(buf)
+					// }
 					return nil, internalError.WithErrCode(ErrCodeMarshalRequest,
 						fmt.Errorf("failed to encode request body: %w", err))
 				}
 				// Return the original buffer to the pool since we have a new one
-				if buf, ok := body.(*bytes.Buffer); ok {
-					c.bufferPool.Put(buf)
-				}
+				// if buf, ok := body.(*bytes.Buffer); ok {
+				// 	c.bufferPool.Put(buf)
+				// }
 				body = encodedBuf
 			}
 		}
@@ -245,11 +245,11 @@ func (c *client) sendRequest(
 		return nil, err
 	}
 
-	if body != nil {
-		if buf, ok := body.(*bytes.Buffer); ok {
-			c.bufferPool.Put(buf)
-		}
-	}
+	// if body != nil {
+	// 	if buf, ok := body.(*bytes.Buffer); ok {
+	// 		c.bufferPool.Put(buf)
+	// 	}
+	// }
 	return resp, nil
 }
 
